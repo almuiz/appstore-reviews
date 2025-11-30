@@ -288,6 +288,23 @@
                             <label for="limitRange"
                                 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 Result Limit
+                                <!-- Info Tooltip -->
+                                <div class="group relative flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 text-slate-400 hover:text-blue-500 cursor-help transition-colors"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <div
+                                        class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 hidden group-hover:block normal-case tracking-normal font-normal text-left leading-relaxed">
+                                        Apple limits their public RSS feed to 50 items. We can't fetch more without a
+                                        paid developer account and a backend server.
+                                        <div
+                                            class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-800">
+                                        </div>
+                                    </div>
+                                </div>
                             </label>
                             <span id="limitValueDisplay"
                                 class="text-sm font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">50</span>
