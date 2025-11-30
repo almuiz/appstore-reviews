@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App Store Reviews • Modern</title>
-    <!-- Tailwind CSS -->
+
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Minimal Tailwind Config for Dark Mode -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -13,111 +17,57 @@
                 extend: {
                     colors: {
                         slate: {
-                            850: '#151e2e',
-                            900: '#0f172a',
-                            950: '#020617',
-                        }
-                    },
-                    animation: {
-                        'toast-in': 'toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
-                    },
-                    keyframes: {
-                        toastIn: {
-                            '0%': { transform: 'translateY(100%)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                            850: '#151e2e', /* Custom color for dark theme */
                         }
                     }
                 }
             }
         }
     </script>
-    <style>
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; }
-        .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-        /* Glass utilities */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .dark .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .loader {
-            border: 2px solid rgba(255,255,255,0.1);
-            border-left-color: #3b82f6;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Slider styling */
-        input[type=range] {
-            -webkit-appearance: none; 
-            background: transparent; 
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: #3b82f6;
-            margin-top: -6px;
-            cursor: pointer;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: #cbd5e1;
-            border-radius: 2px;
-        }
-        .dark input[type=range]::-webkit-slider-runnable-track {
-            background: #475569;
-        }
-    </style>
+    <!-- External Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col font-sans overflow-x-hidden">
+
+<body
+    class="bg-gray-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col font-sans overflow-x-hidden">
 
     <!-- Background Decoration -->
     <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 blur-[100px] dark:bg-blue-600/10"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-[100px] dark:bg-indigo-600/10"></div>
+        <div
+            class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 blur-[100px] dark:bg-blue-600/10">
+        </div>
+        <div
+            class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-[100px] dark:bg-indigo-600/10">
+        </div>
     </div>
 
     <!-- Header -->
     <header class="w-full py-6 px-6 flex justify-between items-center max-w-7xl mx-auto relative z-50">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 text-white font-bold text-lg">
+            <div
+                class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 text-white font-bold text-lg">
                 AS
             </div>
             <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Review<span class="text-blue-500">Extractor</span>
             </h1>
         </div>
-        
-        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
-            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+
+        <button onclick="toggleTheme()"
+            class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+            aria-label="Toggle Dark Mode">
+            <!-- Sun Icon -->
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400 hidden dark:block"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600 dark:hidden block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            <!-- Moon Icon -->
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600 dark:hidden block"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
         </button>
     </header>
@@ -126,7 +76,8 @@
 
         <!-- Hero Section -->
         <div class="max-w-4xl mx-auto text-center mb-10">
-            <h2 class="text-3xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
+            <h2
+                class="text-3xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
                 Analyze App Store Feedback
             </h2>
             <p class="text-slate-600 dark:text-slate-400 text-lg mb-8">
@@ -134,37 +85,43 @@
             </p>
         </div>
 
-        <!-- Input Card (High Z-Index to stay above results) -->
+        <!-- Input Card -->
         <div class="relative z-30">
             <div class="glass-panel rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-black/20 text-left">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                    
+
                     <!-- URL Input -->
                     <div class="md:col-span-8">
-                        <label for="urlInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 ml-1">App Store Link</label>
-                        <input type="text" id="urlInput" 
-                            placeholder="https://apps.apple.com/us/app/example/id123456789" 
-                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:text-white placeholder-slate-400"
-                        >
+                        <label for="urlInput"
+                            class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 ml-1">App
+                            Store Link</label>
+                        <input type="text" id="urlInput" placeholder="https://apps.apple.com/us/app/example/id123456789"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:text-white placeholder-slate-400">
                     </div>
 
                     <!-- Custom Country Select -->
                     <div class="md:col-span-4 relative z-50">
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 ml-1">Region</label>
-                        
+                        <label
+                            class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 ml-1">Region</label>
+
                         <!-- Custom Dropdown Trigger -->
-                        <button id="customSelectTrigger" onclick="toggleCustomSelect()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white">
+                        <button id="customSelectTrigger" onclick="toggleCustomSelect()"
+                            class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white">
                             <span class="flex items-center gap-3">
                                 <span id="selectedFlag" class="text-lg">🌍</span>
                                 <span id="selectedText" class="font-medium truncate">Auto (URL)</span>
                             </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400 transition-transform duration-200" id="selectArrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 text-slate-400 transition-transform duration-200" id="selectArrow"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
 
                         <!-- Dropdown Options -->
-                        <div id="customSelectOptions" class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl max-h-64 overflow-y-auto z-[100]">
+                        <div id="customSelectOptions"
+                            class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl max-h-64 overflow-y-auto z-[100]">
                             <!-- Options injected by JS -->
                         </div>
 
@@ -175,26 +132,36 @@
 
                 <!-- Controls Row: Slider & Button -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6 items-end">
-                    
+
                     <!-- Slider limit -->
                     <div class="md:col-span-8 flex flex-col justify-end pb-1">
                         <div class="flex justify-between items-center mb-2">
-                            <label for="limitRange" class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            <label for="limitRange"
+                                class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 Result Limit
                                 <!-- Info Tooltip -->
                                 <div class="group relative flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400 hover:text-blue-500 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 text-slate-400 hover:text-blue-500 cursor-help" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 hidden group-hover:block">
-                                        Apple's public RSS feed provides exactly 50 recent reviews. This slider filters the view locally.
-                                        <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-800"></div>
+                                    <div
+                                        class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 hidden group-hover:block">
+                                        Apple's public RSS feed provides exactly 50 recent reviews. This slider filters
+                                        the view locally.
+                                        <div
+                                            class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-800">
+                                        </div>
                                     </div>
                                 </div>
                             </label>
-                            <span id="limitValueDisplay" class="text-sm font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">50</span>
+                            <span id="limitValueDisplay"
+                                class="text-sm font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">50</span>
                         </div>
-                        <input type="range" id="limitRange" min="10" max="50" step="10" value="50" oninput="updateLimitDisplay(this.value)" class="w-full">
+                        <input type="range" id="limitRange" min="10" max="50" step="10" value="50"
+                            oninput="updateLimitDisplay(this.value)" class="w-full">
                         <div class="flex justify-between text-[10px] text-slate-400 mt-1 px-1">
                             <span>10</span>
                             <span>20</span>
@@ -206,17 +173,23 @@
 
                     <!-- Button -->
                     <div class="md:col-span-4">
-                        <button onclick="fetchReviews()" id="fetchBtn" class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-semibold rounded-xl py-3 px-4 transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
+                        <button onclick="fetchReviews()" id="fetchBtn"
+                            class="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-semibold rounded-xl py-3 px-4 transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
                             <span id="btnText">Analyze</span>
                             <div id="btnLoader" class="loader hidden"></div>
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Error Message -->
-                <div id="errorContainer" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                <div id="errorContainer"
+                    class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
                     </svg>
                     <div>
                         <h4 class="text-sm font-bold text-red-800 dark:text-red-300">Something went wrong</h4>
@@ -226,39 +199,52 @@
             </div>
         </div>
 
-        <!-- Results Section (Lower Z-Index to sit below input card) -->
-        <!-- Added animate-fade-in-up class here -->
+        <!-- Results Section -->
         <div id="resultsContainer" class="hidden relative z-10 animate-fade-in-up">
             <div class="flex justify-between items-center mb-4 px-1 mt-8">
                 <div class="flex items-baseline gap-2">
                     <h2 class="text-xl font-bold text-slate-800 dark:text-white">Reviews</h2>
-                    <span id="resultsCount" class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full"></span>
+                    <span id="resultsCount"
+                        class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full"></span>
                 </div>
-                <button onclick="copyTable()" class="group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:border-blue-300 dark:hover:border-blue-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 012-2v-8a2 2 0 01-2-2h-8a2 2 0 01-2 2v8a2 2 0 012 2z" />
+                <button onclick="copyTable()"
+                    class="group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg hover:border-blue-300 dark:hover:border-blue-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 012-2v-8a2 2 0 01-2-2h-8a2 2 0 01-2 2v8a2 2 0 012 2z" />
                     </svg>
                     <span>Copy Table</span>
                 </button>
             </div>
 
             <!-- Table Card -->
-            <div class="glass-panel rounded-2xl overflow-hidden shadow-lg border-0 ring-1 ring-slate-900/5 dark:ring-white/10">
+            <div
+                class="glass-panel rounded-2xl overflow-hidden shadow-lg border-0 ring-1 ring-slate-900/5 dark:ring-white/10">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse" id="reviewsTable">
-                        <thead class="bg-slate-50/80 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 text-xs uppercase font-bold tracking-wider backdrop-blur-sm sticky top-0 z-10">
+                        <thead
+                            class="bg-slate-50/80 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 text-xs uppercase font-bold tracking-wider backdrop-blur-sm sticky top-0 z-10">
                             <tr>
-                                <th onclick="sortTable(0, 'date')" class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
-                                    Date <span class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
+                                <th onclick="sortTable(0, 'date')"
+                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                    Date <span
+                                        class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
-                                <th onclick="sortTable(1, 'string')" class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
-                                    Ver <span class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
+                                <th onclick="sortTable(1, 'string')"
+                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                    Ver <span
+                                        class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
-                                <th onclick="sortTable(2, 'number')" class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
-                                    Rating <span class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
+                                <th onclick="sortTable(2, 'number')"
+                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                    Rating <span
+                                        class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
-                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap">Author</th>
-                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 min-w-[200px]">Review</th>
+                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap">Author
+                                </th>
+                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 min-w-[200px]">Review
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800 bg-transparent">
@@ -273,9 +259,13 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 translate-y-24 opacity-0 transition-all duration-300 z-50">
-        <div class="bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400 dark:text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        <div
+            class="bg-slate-800 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400 dark:text-green-600"
+                viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd" />
             </svg>
             <div class="flex flex-col">
                 <span class="font-bold text-sm">Success</span>
@@ -288,362 +278,9 @@
         <p>&copy; 2025 App Store Extractor. Runs locally in your browser.</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // Global storage for reviews
-        let allFetchedReviews = [];
+    <!-- Logic Script -->
+    <script src="script.js"></script>
 
-        // --- Theme Logic ---
-        function toggleTheme() {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        (function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.documentElement.classList.remove('dark');
-            } else {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-
-        // --- Custom Dropdown Logic (Alphabetical + Z-Index Fix) ---
-        const countryOptions = [
-            { code: 'auto', name: 'Auto (URL)', flag: null }, 
-            { code: 'au', name: 'Australia', flag: 'au' },
-            { code: 'br', name: 'Brazil', flag: 'br' },
-            { code: 'ca', name: 'Canada', flag: 'ca' },
-            { code: 'cn', name: 'China', flag: 'cn' },
-            { code: 'fr', name: 'France', flag: 'fr' },
-            { code: 'de', name: 'Germany', flag: 'de' },
-            { code: 'it', name: 'Italy', flag: 'it' },
-            { code: 'jp', name: 'Japan', flag: 'jp' },
-            { code: 'pl', name: 'Poland', flag: 'pl' },
-            { code: 'es', name: 'Spain', flag: 'es' },
-            { code: 'gb', name: 'United Kingdom', flag: 'gb' },
-            { code: 'us', name: 'United States', flag: 'us' },
-        ];
-
-        function initCustomSelect() {
-            const optionsContainer = document.getElementById('customSelectOptions');
-            
-            countryOptions.forEach(opt => {
-                const div = document.createElement('div');
-                div.className = "px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer flex items-center gap-3 transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0";
-                
-                // Content construction
-                let iconHtml = opt.code === 'auto' 
-                    ? `<span class="text-lg">🌍</span>`
-                    : `<img src="https://flagcdn.com/w40/${opt.flag}.png" alt="${opt.code}" class="w-6 h-auto rounded-sm shadow-sm">`;
-                
-                div.innerHTML = `
-                    ${iconHtml}
-                    <span class="text-sm font-medium text-slate-700 dark:text-slate-200">${opt.name}</span>
-                `;
-
-                div.onclick = () => selectCountry(opt);
-                optionsContainer.appendChild(div);
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                const trigger = document.getElementById('customSelectTrigger');
-                const options = document.getElementById('customSelectOptions');
-                if (!trigger.contains(e.target) && !options.contains(e.target)) {
-                    options.classList.add('hidden');
-                    document.getElementById('selectArrow').classList.remove('rotate-180');
-                }
-            });
-        }
-
-        function toggleCustomSelect() {
-            const opts = document.getElementById('customSelectOptions');
-            const arrow = document.getElementById('selectArrow');
-            opts.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        }
-
-        function selectCountry(opt) {
-            document.getElementById('countrySelect').value = opt.code;
-            
-            const flagSpan = document.getElementById('selectedFlag');
-            const textSpan = document.getElementById('selectedText');
-            
-            if (opt.code === 'auto') {
-                flagSpan.innerHTML = '🌍';
-            } else {
-                flagSpan.innerHTML = `<img src="https://flagcdn.com/w40/${opt.flag}.png" alt="${opt.code}" class="w-6 h-auto rounded-sm shadow-sm">`;
-            }
-            textSpan.textContent = opt.name;
-
-            document.getElementById('customSelectOptions').classList.add('hidden');
-            document.getElementById('selectArrow').classList.remove('rotate-180');
-        }
-
-        initCustomSelect();
-
-
-        // --- Extractor Logic ---
-        
-        function updateLimitDisplay(val) {
-            document.getElementById('limitValueDisplay').innerText = val;
-            if (allFetchedReviews.length > 0) {
-                renderTable();
-            }
-        }
-
-        async function fetchReviews() {
-            const urlInput = document.getElementById('urlInput').value.trim();
-            const countrySelect = document.getElementById('countrySelect').value; 
-            
-            // Elements
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            const fetchBtn = document.getElementById('fetchBtn');
-            const errorContainer = document.getElementById('errorContainer');
-            const errorMsg = document.getElementById('errorMsg');
-            const resultsContainer = document.getElementById('resultsContainer');
-            
-            // Reset UI
-            errorContainer.classList.add('hidden');
-            resultsContainer.classList.add('hidden');
-            allFetchedReviews = []; 
-            
-            if (!urlInput) {
-                showError("Please enter a valid App Store URL.");
-                return;
-            }
-
-            const idMatch = urlInput.match(/id(\d+)/);
-            if (!idMatch) {
-                showError("Could not find an App ID in the link. Look for 'id' followed by numbers.");
-                return;
-            }
-            const appId = idMatch[1];
-
-            // Determine Country
-            let country = 'us';
-            if (countrySelect !== 'auto') {
-                country = countrySelect;
-            } else {
-                const countryMatch = urlInput.match(/apps\.apple\.com\/([a-z]{2})\//);
-                if (countryMatch) {
-                    country = countryMatch[1];
-                }
-            }
-
-            // Set Loading State
-            fetchBtn.disabled = true;
-            btnText.textContent = "Fetching...";
-            fetchBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            btnLoader.classList.remove('hidden');
-
-            try {
-                // Fetch Data with FALLBACK Strategy
-                const rssUrl = `https://itunes.apple.com/${country}/rss/customerreviews/id=${appId}/sortBy=mostRecent/json`;
-                
-                let response;
-
-                try {
-                    const proxyUrl1 = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
-                    response = await fetch(proxyUrl1);
-                    if (!response.ok) throw new Error('Proxy 1 failed');
-                } catch (e1) {
-                    console.warn("Primary proxy failed, trying backup...", e1);
-                    try {
-                        const proxyUrl2 = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
-                        response = await fetch(proxyUrl2);
-                        if (!response.ok) throw new Error('Proxy 2 failed');
-                    } catch (e2) {
-                         throw new Error(`Failed to fetch reviews. Both proxy servers are unreachable or the app ID is invalid. Check your internet connection.`);
-                    }
-                }
-
-                const textData = await response.text();
-                let data;
-                try {
-                    data = JSON.parse(textData);
-                } catch(e) {
-                    throw new Error("Invalid response received. There might be no reviews for this country.");
-                }
-
-                if (!data.feed || !data.feed.entry) {
-                    showError(`No reviews found for country code: ${country.toUpperCase()}. Try switching to US.`);
-                    resetBtn();
-                    return;
-                }
-
-                allFetchedReviews = Array.isArray(data.feed.entry) ? data.feed.entry : [data.feed.entry];
-                
-                renderTable();
-
-            } catch (err) {
-                console.error(err);
-                showError(err.message);
-            } finally {
-                resetBtn();
-            }
-        }
-
-        function renderTable() {
-            const tbody = document.querySelector('#reviewsTable tbody');
-            const resultsContainer = document.getElementById('resultsContainer');
-            const resultsCount = document.getElementById('resultsCount');
-            const limit = parseInt(document.getElementById('limitRange').value);
-
-            tbody.innerHTML = '';
-
-            const entriesToRender = allFetchedReviews.slice(0, limit);
-
-            entriesToRender.forEach(entry => {
-                const updatedRaw = entry.updated ? entry.updated.label : null;
-                const dateObj = updatedRaw ? new Date(updatedRaw) : new Date();
-                const timestamp = dateObj.getTime();
-                
-                const dateStr = dateObj.toLocaleDateString(undefined, { 
-                    year: 'numeric', month: 'short', day: 'numeric' 
-                });
-                
-                const rating = entry['im:rating'] ? parseInt(entry['im:rating'].label) : 0;
-                const version = entry['im:version'] ? entry['im:version'].label : '-';
-                const author = entry.author ? entry.author.name.label : 'Anonymous';
-                const title = entry.title ? entry.title.label : '';
-                const content = entry.content ? entry.content.label : '';
-
-                let starsHtml = '';
-                for(let i=1; i<=5; i++) {
-                    if(i <= rating) {
-                        starsHtml += `<span class="text-yellow-400">★</span>`;
-                    } else {
-                        starsHtml += `<span class="text-slate-300 dark:text-slate-600">★</span>`;
-                    }
-                }
-
-                const row = `
-                    <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition border-b border-slate-100 dark:border-slate-800 last:border-0">
-                        <td class="p-5 text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap font-mono" data-value="${timestamp}">${dateStr}</td>
-                        <td class="p-5 text-xs text-slate-400 dark:text-slate-500 font-mono" data-value="${version}">${version}</td>
-                        <td class="p-5 whitespace-nowrap text-lg leading-none" data-value="${rating}">${starsHtml}</td>
-                        <td class="p-5 text-sm font-medium text-slate-700 dark:text-slate-200">${author}</td>
-                        <td class="p-5 max-w-xl">
-                            <div class="font-bold text-slate-800 dark:text-white mb-1 text-sm">${title}</div>
-                            <div class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${content}</div>
-                        </td>
-                    </tr>
-                `;
-                tbody.insertAdjacentHTML('beforeend', row);
-            });
-
-            resultsCount.textContent = entriesToRender.length;
-            resultsContainer.classList.remove('hidden');
-            
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
-        }
-
-        // --- Sorting Logic ---
-        let sortDirection = 'asc';
-        let lastSortedColumn = -1;
-
-        function sortTable(n, type) {
-            const table = document.getElementById("reviewsTable");
-            let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            switching = true;
-            dir = "asc"; 
-            
-            if (lastSortedColumn === n) {
-                dir = sortDirection === 'asc' ? 'desc' : 'asc';
-            }
-            sortDirection = dir;
-            lastSortedColumn = n;
-
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
-            const currentHeader = table.rows[0].getElementsByTagName("TH")[n];
-            currentHeader.querySelector('.sort-icon').textContent = dir === 'asc' ? '↑' : '↓';
-
-            while (switching) {
-                switching = false;
-                rows = table.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[n];
-                    y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                    let xVal = x.getAttribute('data-value') || x.textContent.toLowerCase();
-                    let yVal = y.getAttribute('data-value') || y.textContent.toLowerCase();
-
-                    if (type === 'number' || type === 'date') {
-                        xVal = parseFloat(xVal);
-                        yVal = parseFloat(yVal);
-                    }
-
-                    if (dir === "asc") {
-                        if (xVal > yVal) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    } else if (dir === "desc") {
-                        if (xVal < yVal) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                }
-                if (shouldSwitch) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                    switchcount++;
-                }
-            }
-        }
-
-        function resetBtn() {
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            const fetchBtn = document.getElementById('fetchBtn');
-            
-            fetchBtn.disabled = false;
-            fetchBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-            btnText.textContent = "Analyze";
-            btnLoader.classList.add('hidden');
-        }
-
-        function showError(msg) {
-            const errorContainer = document.getElementById('errorContainer');
-            const errorMsg = document.getElementById('errorMsg');
-            errorMsg.textContent = msg;
-            errorContainer.classList.remove('hidden');
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
-        }
-
-        function copyTable() {
-            const table = document.getElementById('reviewsTable');
-            const range = document.createRange();
-            range.selectNode(table);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                showToast(); 
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
-            selection.removeAllRanges();
-        }
-    </script>
 </body>
+
 </html>
