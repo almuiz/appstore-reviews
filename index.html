@@ -147,17 +147,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Logic: scale(0) is default hidden state. 
-               We use CSS Vars to determine if we squish X or Y axis based on entry direction */
             transform: var(--transform-from, scale(0));
             transform-origin: var(--origin, center);
-
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: -1;
             border-radius: inherit;
         }
 
-        /* Hover state: Always full scale (fill the button) */
+        /* Hover state: Always full scale */
         .btn-directional:hover::before {
             transform: scale(1, 1);
         }
@@ -165,7 +162,7 @@
         /* Colors for Main Analyze Button */
         #fetchBtn.btn-directional::before {
             background: #0f172a;
-            /* Very dark slate (almost black) for high contrast against blue */
+            /* Very dark slate */
         }
 
         /* Colors for Secondary Buttons (White/Dark ones) */
@@ -213,7 +210,7 @@
             </h1>
         </div>
 
-        <button onclick="toggleTheme()"
+        <button id="themeToggleBtn"
             class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors focus:outline-none"
             aria-label="Toggle Dark Mode">
             <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400 hidden dark:block"
@@ -233,7 +230,6 @@
 
         <!-- Hero Section -->
         <div class="max-w-4xl mx-auto text-center mb-10">
-            <!-- pb-2 fixes text clipping for gradients -->
             <h2
                 class="text-3xl md:text-5xl font-extrabold mb-4 pb-2 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">
                 Analyze App Store Feedback
@@ -262,8 +258,7 @@
                         <label
                             class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1 ml-1">Region</label>
 
-                        <!-- Custom Dropdown Trigger -->
-                        <button id="customSelectTrigger" onclick="toggleCustomSelect()"
+                        <button id="customSelectTrigger"
                             class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white">
                             <span class="flex items-center gap-3">
                                 <span id="selectedFlag" class="text-lg">🌍</span>
@@ -277,63 +272,36 @@
                             </svg>
                         </button>
 
-                        <!-- Dropdown Options -->
                         <div id="customSelectOptions"
                             class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl max-h-64 overflow-y-auto z-[100]">
                             <!-- Options injected by JS -->
                         </div>
 
-                        <!-- Hidden Input to store value for logic -->
                         <input type="hidden" id="countrySelect" value="auto">
                     </div>
                 </div>
 
-                <!-- Controls Row: Slider & Button -->
+                <!-- Controls -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6 items-end">
-
-                    <!-- Slider limit -->
                     <div class="md:col-span-8 flex flex-col justify-end pb-1">
                         <div class="flex justify-between items-center mb-2">
                             <label for="limitRange"
                                 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 Result Limit
-                                <!-- Info Tooltip -->
-                                <div class="group relative flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 text-slate-400 hover:text-blue-500 cursor-help" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <div
-                                        class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 hidden group-hover:block">
-                                        Apple's public RSS feed provides exactly 50 recent reviews. This slider filters
-                                        the view locally.
-                                        <div
-                                            class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-800">
-                                        </div>
-                                    </div>
-                                </div>
                             </label>
                             <span id="limitValueDisplay"
                                 class="text-sm font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">50</span>
                         </div>
-                        <input type="range" id="limitRange" min="10" max="50" step="10" value="50"
-                            oninput="updateLimitDisplay(this.value)" class="w-full">
+                        <input type="range" id="limitRange" min="10" max="50" step="10" value="50" class="w-full">
                         <div class="flex justify-between text-[10px] text-slate-400 mt-1 px-1">
-                            <span>10</span>
-                            <span>20</span>
-                            <span>30</span>
-                            <span>40</span>
-                            <span>50</span>
+                            <span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
                         </div>
                     </div>
 
                     <!-- Analyze Button -->
                     <div class="md:col-span-4">
-                        <button onclick="fetchReviews()" id="fetchBtn"
+                        <button id="fetchBtn"
                             class="btn-directional w-full bg-blue-600 text-white font-semibold rounded-xl py-3 px-4 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
-                            <!-- Important: Text must be relative z-10 to stay above curtain -->
                             <span class="relative z-10 flex items-center gap-2 pointer-events-none">
                                 <span id="btnText">Analyze</span>
                                 <div id="btnLoader" class="loader hidden"></div>
@@ -345,15 +313,8 @@
                 <!-- Error Message -->
                 <div id="errorContainer"
                     class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                            clip-rule="evenodd" />
-                    </svg>
+                    <div class="text-red-600 dark:text-red-400 font-bold">Error:</div>
                     <div>
-                        <h4 class="text-sm font-bold text-red-800 dark:text-red-300">Something went wrong</h4>
                         <p id="errorMsg" class="text-sm text-red-700 dark:text-red-400 mt-1"></p>
                     </div>
                 </div>
@@ -362,38 +323,52 @@
 
         <!-- Results Section -->
         <div id="resultsContainer" class="hidden relative z-10 animate-fade-in-up">
-            <div class="flex justify-between items-center mb-4 px-1 mt-8">
-                <div class="flex items-baseline gap-2">
-                    <h2 class="text-xl font-bold text-slate-800 dark:text-white">Reviews</h2>
-                    <span id="resultsCount"
-                        class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full"></span>
+            <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-6 px-1 mt-8 gap-4">
+                <div class="flex items-center gap-4 w-full md:w-auto">
+                    <!-- App Info Display (New) -->
+                    <div id="appInfoContainer"
+                        class="hidden flex items-center gap-3 bg-white dark:bg-slate-800 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <img id="appIcon" src="" alt="App Icon"
+                            class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-700">
+                        <div class="flex flex-col">
+                            <h3 id="appNameDisplay"
+                                class="font-bold text-sm text-slate-800 dark:text-white leading-tight">App Name</h3>
+                            <span id="resultsCount" class="text-xs font-medium text-slate-500 dark:text-slate-400">0
+                                reviews</span>
+                        </div>
+                    </div>
+
+                    <!-- Fallback Title if no app info -->
+                    <div id="defaultTitle" class="flex items-baseline gap-2">
+                        <h2 class="text-xl font-bold text-slate-800 dark:text-white">Reviews</h2>
+                        <span id="resultsCountFallback"
+                            class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full"></span>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex gap-3">
-                    <!-- Export CSV Button -->
-                    <button onclick="downloadCSV()"
-                        class="btn-directional group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg">
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button id="exportBtn"
+                        class="btn-directional flex-1 md:flex-none justify-center group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg">
                         <span class="relative z-10 flex items-center gap-2 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            <span>Export CSV</span>
+                            <span>CSV</span>
                         </span>
                     </button>
 
-                    <!-- Copy Table Button -->
-                    <button onclick="copyTable()"
-                        class="btn-directional group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg">
+                    <button id="copyBtn"
+                        class="btn-directional flex-1 md:flex-none justify-center group flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg">
                         <span class="relative z-10 flex items-center gap-2 pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 012-2v-8a2 2 0 01-2-2h-8a2 2 0 01-2 2v8a2 2 0 012 2z" />
                             </svg>
-                            <span>Copy Table</span>
+                            <span>Copy</span>
                         </span>
                     </button>
                 </div>
@@ -407,18 +382,18 @@
                         <thead
                             class="bg-slate-50/80 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 text-xs uppercase font-bold tracking-wider backdrop-blur-sm sticky top-0 z-10">
                             <tr>
-                                <th onclick="sortTable(0, 'date')"
-                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group"
+                                    data-sort="date">
                                     Date <span
                                         class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
-                                <th onclick="sortTable(1, 'string')"
-                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group"
+                                    data-sort="string">
                                     Ver <span
                                         class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
-                                <th onclick="sortTable(2, 'number')"
-                                    class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group">
+                                <th class="p-5 border-b border-slate-200 dark:border-slate-700 whitespace-nowrap cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 transition select-none group"
+                                    data-sort="number">
                                     Rating <span
                                         class="sort-icon inline-block ml-1 opacity-30 group-hover:opacity-100">↕</span>
                                 </th>
@@ -428,9 +403,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 bg-transparent">
-                            <!-- Rows injected via JS -->
-                        </tbody>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 bg-transparent"></tbody>
                     </table>
                 </div>
             </div>
@@ -461,8 +434,8 @@
 
     <!-- Logic Script -->
     <script>
-        // Global storage for reviews
         let allFetchedReviews = [];
+        let currentAppName = 'app_reviews'; // Default filename part
 
         // --- Theme Logic ---
         function toggleTheme() {
@@ -476,7 +449,6 @@
             }
         }
 
-        // Init theme immediately
         (function initTheme() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
@@ -486,7 +458,7 @@
             }
         })();
 
-        // --- Custom Dropdown Logic ---
+        // --- Dropdown Logic ---
         const countryOptions = [
             { code: 'auto', name: 'Auto (URL)', flag: null },
             { code: 'au', name: 'Australia', flag: 'au' },
@@ -505,24 +477,16 @@
 
         function initCustomSelect() {
             const optionsContainer = document.getElementById('customSelectOptions');
-
             countryOptions.forEach(opt => {
                 const div = document.createElement('div');
                 div.className = "px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer flex items-center gap-3 transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0";
-
                 let iconHtml = opt.code === 'auto'
                     ? `<span class="text-lg">🌍</span>`
                     : `<img src="https://flagcdn.com/w40/${opt.flag}.png" alt="${opt.code}" class="w-6 h-auto rounded-sm shadow-sm">`;
-
-                div.innerHTML = `
-                    ${iconHtml}
-                    <span class="text-sm font-medium text-slate-700 dark:text-slate-200">${opt.name}</span>
-                `;
-
+                div.innerHTML = `${iconHtml}<span class="text-sm font-medium text-slate-700 dark:text-slate-200">${opt.name}</span>`;
                 div.onclick = () => selectCountry(opt);
                 optionsContainer.appendChild(div);
             });
-
             document.addEventListener('click', (e) => {
                 const trigger = document.getElementById('customSelectTrigger');
                 const options = document.getElementById('customSelectOptions');
@@ -534,53 +498,71 @@
         }
 
         function toggleCustomSelect() {
-            const opts = document.getElementById('customSelectOptions');
-            const arrow = document.getElementById('selectArrow');
-            opts.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
+            document.getElementById('customSelectOptions').classList.toggle('hidden');
+            document.getElementById('selectArrow').classList.toggle('rotate-180');
         }
 
         function selectCountry(opt) {
             document.getElementById('countrySelect').value = opt.code;
-
             const flagSpan = document.getElementById('selectedFlag');
             const textSpan = document.getElementById('selectedText');
-
             if (opt.code === 'auto') {
                 flagSpan.innerHTML = '🌍';
             } else {
                 flagSpan.innerHTML = `<img src="https://flagcdn.com/w40/${opt.flag}.png" alt="${opt.code}" class="w-6 h-auto rounded-sm shadow-sm">`;
             }
             textSpan.textContent = opt.name;
-
             document.getElementById('customSelectOptions').classList.add('hidden');
             document.getElementById('selectArrow').classList.remove('rotate-180');
         }
 
         // --- Extractor Logic ---
-
         function updateLimitDisplay(val) {
             document.getElementById('limitValueDisplay').innerText = val;
-            if (allFetchedReviews.length > 0) {
-                renderTable();
+            if (allFetchedReviews.length > 0) renderTable();
+        }
+
+        // NEW: Fetch official App Name via iTunes Lookup API
+        async function fetchAppInfo(appId, country) {
+            try {
+                // We use 'us' as default for metadata lookup if auto to ensure english response mainly
+                // but if user selected country, we can try that.
+                const lookupCountry = country === 'auto' ? 'us' : country;
+                const url = `https://itunes.apple.com/${lookupCountry}/lookup?id=${appId}`;
+                const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+
+                const res = await fetch(proxy);
+                if (!res.ok) return null;
+                const json = await res.json();
+
+                if (json.results && json.results.length > 0) {
+                    return json.results[0]; // Contains trackName, artworkUrl60, etc.
+                }
+            } catch (e) {
+                console.warn("Could not fetch app metadata", e);
             }
+            return null;
         }
 
         async function fetchReviews() {
             const urlInput = document.getElementById('urlInput').value.trim();
             const countrySelect = document.getElementById('countrySelect').value;
-
             const btnText = document.getElementById('btnText');
             const btnLoader = document.getElementById('btnLoader');
             const fetchBtn = document.getElementById('fetchBtn');
             const errorContainer = document.getElementById('errorContainer');
             const errorMsg = document.getElementById('errorMsg');
             const resultsContainer = document.getElementById('resultsContainer');
+            const appInfoContainer = document.getElementById('appInfoContainer');
+            const defaultTitle = document.getElementById('defaultTitle');
 
-            // Reset UI
+            // UI Reset
             errorContainer.classList.add('hidden');
             resultsContainer.classList.add('hidden');
+            appInfoContainer.classList.add('hidden');
+            defaultTitle.classList.remove('hidden');
             allFetchedReviews = [];
+            currentAppName = 'app_reviews'; // Reset name
 
             if (!urlInput) {
                 showError("Please enter a valid App Store URL.");
@@ -589,7 +571,7 @@
 
             const idMatch = urlInput.match(/id(\d+)/);
             if (!idMatch) {
-                showError("Could not find an App ID in the link. Look for 'id' followed by numbers.");
+                showError("Could not find App ID. Ensure link contains 'id' followed by numbers.");
                 return;
             }
             const appId = idMatch[1];
@@ -599,54 +581,62 @@
                 country = countrySelect;
             } else {
                 const countryMatch = urlInput.match(/apps\.apple\.com\/([a-z]{2})\//);
-                if (countryMatch) {
-                    country = countryMatch[1];
-                }
+                if (countryMatch) country = countryMatch[1];
             }
 
-            // Set Loading State
             fetchBtn.disabled = true;
             btnText.textContent = "Fetching...";
             btnLoader.classList.remove('hidden');
 
             try {
+                // 1. Fetch App Metadata (Name & Icon) - Parallel or Seq? Seq is safer for logic.
+                const appMetadata = await fetchAppInfo(appId, country);
+
+                if (appMetadata) {
+                    // Update UI with real App Name
+                    currentAppName = appMetadata.trackName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-\u00C0-\uFFFF]/g, '');
+                    document.getElementById('appNameDisplay').textContent = appMetadata.trackName;
+                    document.getElementById('appIcon').src = appMetadata.artworkUrl60 || '';
+
+                    appInfoContainer.classList.remove('hidden');
+                    appInfoContainer.classList.add('flex');
+                    defaultTitle.classList.add('hidden');
+                }
+
+                // 2. Fetch Reviews
                 const rssUrl = `https://itunes.apple.com/${country}/rss/customerreviews/id=${appId}/sortBy=mostRecent/json`;
 
                 let response;
+                // Proxy Fallback Strategy
                 try {
-                    const proxyUrl1 = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
-                    response = await fetch(proxyUrl1);
-                    if (!response.ok) throw new Error('Proxy 1 failed');
-                } catch (e1) {
-                    console.warn("Primary proxy failed, trying backup...", e1);
+                    const p1 = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+                    response = await fetch(p1);
+                    if (!response.ok) throw new Error('P1');
+                } catch (e) {
+                    console.warn("Proxy 1 fail, trying backup");
                     try {
-                        const proxyUrl2 = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
-                        response = await fetch(proxyUrl2);
-                        if (!response.ok) throw new Error('Proxy 2 failed');
+                        const p2 = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
+                        response = await fetch(p2);
+                        if (!response.ok) throw new Error('P2');
                     } catch (e2) {
-                        throw new Error(`Failed to fetch reviews. Both proxy servers are unreachable or the app ID is invalid. Check your internet connection.`);
+                        throw new Error(`Failed to connect. Check internet or try again later.`);
                     }
                 }
 
                 const textData = await response.text();
                 let data;
-                try {
-                    data = JSON.parse(textData);
-                } catch (e) {
-                    throw new Error("Invalid response received. There might be no reviews for this country.");
-                }
+                try { data = JSON.parse(textData); } catch (e) { throw new Error("Invalid data from Apple."); }
 
                 if (!data.feed || !data.feed.entry) {
-                    showError(`No reviews found for country code: ${country.toUpperCase()}. Try switching to US.`);
+                    showError(`No reviews found for country: ${country.toUpperCase()}. Try switching region.`);
                     resetBtn();
                     return;
                 }
 
                 allFetchedReviews = Array.isArray(data.feed.entry) ? data.feed.entry : [data.feed.entry];
-
                 renderTable();
 
-                // Re-initialize hover effects for new buttons in DOM
+                // Re-init hover for dynamic elements
                 setTimeout(initDirectionalButtons, 100);
 
             } catch (err) {
@@ -660,42 +650,33 @@
         function renderTable() {
             const tbody = document.querySelector('#reviewsTable tbody');
             const resultsContainer = document.getElementById('resultsContainer');
-            const resultsCount = document.getElementById('resultsCount');
             const limit = parseInt(document.getElementById('limitRange').value);
 
+            // Update counts in UI (either in main title or metadata box)
+            const countStr = `(${Math.min(limit, allFetchedReviews.length)}/${allFetchedReviews.length})`;
+            document.getElementById('resultsCount').textContent = countStr + " reviews";
+            document.getElementById('resultsCountFallback').textContent = allFetchedReviews.length;
+
             tbody.innerHTML = '';
+            const entries = allFetchedReviews.slice(0, limit);
 
-            const entriesToRender = allFetchedReviews.slice(0, limit);
-
-            entriesToRender.forEach(entry => {
-                const updatedRaw = entry.updated ? entry.updated.label : null;
-                const dateObj = updatedRaw ? new Date(updatedRaw) : new Date();
-                const timestamp = dateObj.getTime();
-
-                const dateStr = dateObj.toLocaleDateString(undefined, {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                });
-
+            entries.forEach(entry => {
+                const dateObj = entry.updated ? new Date(entry.updated.label) : new Date();
+                const dateStr = dateObj.toLocaleDateString();
                 const rating = entry['im:rating'] ? parseInt(entry['im:rating'].label) : 0;
                 const version = entry['im:version'] ? entry['im:version'].label : '-';
-                const author = entry.author ? entry.author.name.label : 'Anonymous';
+                const author = entry.author ? entry.author.name.label : 'Anon';
                 const title = entry.title ? entry.title.label : '';
                 const content = entry.content ? entry.content.label : '';
 
-                let starsHtml = '';
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= rating) {
-                        starsHtml += `<span class="text-yellow-400">★</span>`;
-                    } else {
-                        starsHtml += `<span class="text-slate-300 dark:text-slate-600">★</span>`;
-                    }
-                }
+                let stars = '';
+                for (let i = 1; i <= 5; i++) stars += (i <= rating) ? '<span class="text-yellow-400">★</span>' : '<span class="text-slate-300 dark:text-slate-600">★</span>';
 
                 const row = `
                     <tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition border-b border-slate-100 dark:border-slate-800 last:border-0">
-                        <td class="p-5 text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap font-mono" data-value="${timestamp}">${dateStr}</td>
-                        <td class="p-5 text-xs text-slate-400 dark:text-slate-500 font-mono" data-value="${version}">${version}</td>
-                        <td class="p-5 whitespace-nowrap text-lg leading-none" data-value="${rating}">${starsHtml}</td>
+                        <td class="p-5 text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap font-mono" data-val="${dateObj.getTime()}">${dateStr}</td>
+                        <td class="p-5 text-xs text-slate-400 dark:text-slate-500 font-mono">${version}</td>
+                        <td class="p-5 whitespace-nowrap text-lg leading-none" data-val="${rating}">${stars}</td>
                         <td class="p-5 text-sm font-medium text-slate-700 dark:text-slate-200">${author}</td>
                         <td class="p-5 max-w-xl">
                             <div class="font-bold text-slate-800 dark:text-white mb-1 text-sm">${title}</div>
@@ -705,232 +686,125 @@
                 `;
                 tbody.insertAdjacentHTML('beforeend', row);
             });
-
-            resultsCount.textContent = entriesToRender.length;
             resultsContainer.classList.remove('hidden');
-
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
+            // Reset sorting icons
+            document.querySelectorAll('.sort-icon').forEach(i => i.textContent = '↕');
         }
 
         function downloadCSV() {
-            if (!allFetchedReviews || allFetchedReviews.length === 0) {
-                showError("No data available to export.");
-                return;
-            }
-
+            if (!allFetchedReviews.length) { showError("No data."); return; }
             const limit = parseInt(document.getElementById('limitRange').value);
-            const dataToExport = allFetchedReviews.slice(0, limit);
-
+            const data = allFetchedReviews.slice(0, limit);
             const headers = ['Date', 'Version', 'Rating', 'Author', 'Title', 'Review'];
 
-            const rows = dataToExport.map(entry => {
-                const updatedRaw = entry.updated ? entry.updated.label : null;
-                const dateObj = updatedRaw ? new Date(updatedRaw) : new Date();
-                const dateStr = dateObj.toLocaleDateString();
-
-                const version = entry['im:version'] ? entry['im:version'].label : '';
-                const rating = entry['im:rating'] ? entry['im:rating'].label : '';
-                const author = entry.author ? entry.author.name.label : '';
-                const title = entry.title ? entry.title.label : '';
-                const content = entry.content ? entry.content.label : '';
-
-                const escape = (text) => {
-                    if (!text) return '""';
-                    return '"' + text.toString().replace(/"/g, '""') + '"';
-                };
-
-                return [
-                    escape(dateStr),
-                    escape(version),
-                    escape(rating),
-                    escape(author),
-                    escape(title),
-                    escape(content)
-                ].join(',');
+            const rows = data.map(e => {
+                const d = e.updated ? new Date(e.updated.label).toLocaleDateString() : '';
+                const v = e['im:version'] ? e['im:version'].label : '';
+                const r = e['im:rating'] ? e['im:rating'].label : '';
+                const a = e.author ? e.author.name.label : '';
+                const t = e.title ? e.title.label : '';
+                const c = e.content ? e.content.label : '';
+                const esc = txt => `"${(txt || '').toString().replace(/"/g, '""')}"`;
+                return [esc(d), esc(v), esc(r), esc(a), esc(t), esc(c)].join(',');
             });
 
-            const csvContent = [headers.join(','), ...rows].join('\n');
-            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-
-            const url = URL.createObjectURL(blob);
+            const blob = new Blob(['\uFEFF' + [headers.join(','), ...rows].join('\n')], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', 'app_store_reviews.csv');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${currentAppName}_reviews.csv`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
-            showToast('CSV downloaded successfully', 'File saved');
-        }
-
-        // --- Sorting Logic ---
-        let sortDirection = 'asc';
-        let lastSortedColumn = -1;
-
-        function sortTable(n, type) {
-            const table = document.getElementById("reviewsTable");
-            let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-            switching = true;
-            dir = "asc";
-
-            if (lastSortedColumn === n) {
-                dir = sortDirection === 'asc' ? 'desc' : 'asc';
-            }
-            sortDirection = dir;
-            lastSortedColumn = n;
-
-            document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
-            const currentHeader = table.rows[0].getElementsByTagName("TH")[n];
-            currentHeader.querySelector('.sort-icon').textContent = dir === 'asc' ? '↑' : '↓';
-
-            while (switching) {
-                switching = false;
-                rows = table.rows;
-                for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[n];
-                    y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                    let xVal = x.getAttribute('data-value') || x.textContent.toLowerCase();
-                    let yVal = y.getAttribute('data-value') || y.textContent.toLowerCase();
-
-                    if (type === 'number' || type === 'date') {
-                        xVal = parseFloat(xVal);
-                        yVal = parseFloat(yVal);
-                    }
-
-                    if (dir === "asc") {
-                        if (xVal > yVal) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    } else if (dir === "desc") {
-                        if (xVal < yVal) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                }
-                if (shouldSwitch) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                    switchcount++;
-                }
-            }
-        }
-
-        function resetBtn() {
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            const fetchBtn = document.getElementById('fetchBtn');
-            fetchBtn.disabled = false;
-            fetchBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-            btnText.textContent = "Analyze";
-            btnLoader.classList.add('hidden');
-        }
-
-        function showError(msg) {
-            const errorContainer = document.getElementById('errorContainer');
-            const errorMsg = document.getElementById('errorMsg');
-            errorMsg.textContent = msg;
-            errorContainer.classList.remove('hidden');
-        }
-
-        function showToast(title = 'Success', msg = '') {
-            const toast = document.getElementById('toast');
-            const titleEl = document.getElementById('toastTitle') || toast.querySelector('.font-bold');
-            const msgEl = document.getElementById('toastMessage') || toast.querySelector('.opacity-90');
-            if (titleEl) titleEl.textContent = title;
-            if (msgEl) msgEl.textContent = msg;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+            showToast('Downloaded', 'CSV file saved');
         }
 
         function copyTable() {
-            const table = document.getElementById('reviewsTable');
             const range = document.createRange();
-            range.selectNode(table);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                showToast('Success', 'Table copied to clipboard');
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
-            selection.removeAllRanges();
+            range.selectNode(document.getElementById('reviewsTable'));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            showToast('Success', 'Table copied');
         }
 
-        // --- Directional Hover Logic (Using Closest Edge) ---
+        // Sorting
+        let sortDir = 'asc'; let lastCol = -1;
+        function sortTable(idx, type) {
+            const table = document.getElementById("reviewsTable");
+            let rows = Array.from(table.rows).slice(1);
+            let dir = (lastCol === idx && sortDir === 'asc') ? 'desc' : 'asc';
+            lastCol = idx; sortDir = dir;
+
+            document.querySelectorAll('.sort-icon').forEach(i => i.textContent = '↕');
+            table.rows[0].cells[idx].querySelector('.sort-icon').textContent = dir === 'asc' ? '↑' : '↓';
+
+            rows.sort((a, b) => {
+                let x = a.cells[idx].getAttribute('data-val') || a.cells[idx].textContent.toLowerCase();
+                let y = b.cells[idx].getAttribute('data-val') || b.cells[idx].textContent.toLowerCase();
+                if (type === 'number' || type === 'date') { x = parseFloat(x); y = parseFloat(y); }
+                return dir === 'asc' ? (x > y ? 1 : -1) : (x < y ? 1 : -1);
+            });
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // --- Hover Logic ---
         function initDirectionalButtons() {
-            const buttons = document.querySelectorAll('.btn-directional');
-
-            buttons.forEach(btn => {
-                // Check if initialized
-                if (btn.classList.contains('js-hover-init')) return;
-                btn.classList.add('js-hover-init');
-
-                // Helper to set CSS vars based on mouse position
-                const updateVars = (e, isLeave = false) => {
+            document.querySelectorAll('.btn-directional').forEach(btn => {
+                if (btn.dataset.init) return;
+                btn.dataset.init = "true";
+                const update = (e) => {
                     const rect = btn.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
-                    const w = rect.width;
-                    const h = rect.height;
+                    const w = rect.width; const h = rect.height;
+                    const sides = [y, w - x, h - y, x]; // Top, Right, Bottom, Left
+                    const min = Math.min(...sides);
+                    const idx = sides.indexOf(min);
+                    const origins = ['top', 'right', 'bottom', 'left'];
+                    const transforms = ['scale(1,0)', 'scale(0,1)', 'scale(1,0)', 'scale(0,1)'];
 
-                    // Distance to edges
-                    const distTop = y;
-                    const distBottom = h - y;
-                    const distLeft = x;
-                    const distRight = w - x;
-
-                    // Find min dist
-                    const min = Math.min(distTop, distBottom, distLeft, distRight);
-                    let direction; // 0:Top, 1:Right, 2:Bottom, 3:Left
-
-                    if (min === distTop) direction = 0;
-                    else if (min === distBottom) direction = 2;
-                    else if (min === distLeft) direction = 3;
-                    else direction = 1;
-
-                    // Determine Origin and Start Scale based on direction
-                    let origin, transformFrom;
-
-                    switch (direction) {
-                        case 0: // Top
-                            origin = 'top center';
-                            transformFrom = 'scale(1, 0)'; // Stretch vertically
-                            break;
-                        case 1: // Right
-                            origin = 'right center';
-                            transformFrom = 'scale(0, 1)'; // Stretch horizontally
-                            break;
-                        case 2: // Bottom
-                            origin = 'bottom center';
-                            transformFrom = 'scale(1, 0)'; // Stretch vertically
-                            break;
-                        case 3: // Left
-                            origin = 'left center';
-                            transformFrom = 'scale(0, 1)'; // Stretch horizontally
-                            break;
-                    }
-
-                    btn.style.setProperty('--origin', origin);
-                    btn.style.setProperty('--transform-from', transformFrom);
+                    btn.style.setProperty('--origin', origins[idx] + ' center');
+                    btn.style.setProperty('--transform-from', transforms[idx]);
                 };
-
-                btn.addEventListener('mouseenter', (e) => updateVars(e, false));
-                btn.addEventListener('mouseleave', (e) => updateVars(e, true));
+                btn.addEventListener('mouseenter', e => update(e));
+                btn.addEventListener('mouseleave', e => update(e));
             });
         }
 
-        // Init everything
+        // Helpers
+        function resetBtn() {
+            document.getElementById('fetchBtn').disabled = false;
+            document.getElementById('btnText').textContent = "Analyze";
+            document.getElementById('btnLoader').classList.add('hidden');
+        }
+        function showError(msg) {
+            document.getElementById('errorContainer').classList.remove('hidden');
+            document.getElementById('errorMsg').textContent = msg;
+        }
+        function showToast(title, msg) {
+            const t = document.getElementById('toast');
+            t.querySelector('.font-bold').textContent = title;
+            t.querySelector('.opacity-90').textContent = msg;
+            t.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 3000);
+        }
+
+        // Init
         document.addEventListener('DOMContentLoaded', () => {
             initCustomSelect();
             initDirectionalButtons();
+
+            document.getElementById('fetchBtn').addEventListener('click', fetchReviews);
+            document.getElementById('exportBtn').addEventListener('click', downloadCSV);
+            document.getElementById('copyBtn').addEventListener('click', copyTable);
+            document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+            document.getElementById('limitRange').addEventListener('input', e => updateLimitDisplay(e.target.value));
+
+            document.querySelectorAll('th').forEach((th, i) => {
+                th.addEventListener('click', () => sortTable(i, th.dataset.sort));
+            });
         });
     </script>
 </body>
