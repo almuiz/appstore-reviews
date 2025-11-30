@@ -147,7 +147,6 @@ async function fetchReviews() {
     // Set Loading State
     fetchBtn.disabled = true;
     btnText.textContent = "Fetching...";
-    fetchBtn.classList.add('opacity-75', 'cursor-not-allowed');
     btnLoader.classList.remove('hidden');
 
     try {
@@ -186,6 +185,9 @@ async function fetchReviews() {
         allFetchedReviews = Array.isArray(data.feed.entry) ? data.feed.entry : [data.feed.entry];
 
         renderTable();
+
+        // Re-initialize hover effects for new buttons in DOM
+        setTimeout(initDirectionalButtons, 100);
 
     } catch (err) {
         console.error(err);
@@ -250,6 +252,57 @@ function renderTable() {
     document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '↕');
 }
 
+function downloadCSV() {
+    if (!allFetchedReviews || allFetchedReviews.length === 0) {
+        showError("No data available to export.");
+        return;
+    }
+
+    const limit = parseInt(document.getElementById('limitRange').value);
+    const dataToExport = allFetchedReviews.slice(0, limit);
+
+    const headers = ['Date', 'Version', 'Rating', 'Author', 'Title', 'Review'];
+
+    const rows = dataToExport.map(entry => {
+        const updatedRaw = entry.updated ? entry.updated.label : null;
+        const dateObj = updatedRaw ? new Date(updatedRaw) : new Date();
+        const dateStr = dateObj.toLocaleDateString();
+
+        const version = entry['im:version'] ? entry['im:version'].label : '';
+        const rating = entry['im:rating'] ? entry['im:rating'].label : '';
+        const author = entry.author ? entry.author.name.label : '';
+        const title = entry.title ? entry.title.label : '';
+        const content = entry.content ? entry.content.label : '';
+
+        const escape = (text) => {
+            if (!text) return '""';
+            return '"' + text.toString().replace(/"/g, '""') + '"';
+        };
+
+        return [
+            escape(dateStr),
+            escape(version),
+            escape(rating),
+            escape(author),
+            escape(title),
+            escape(content)
+        ].join(',');
+    });
+
+    const csvContent = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'app_store_reviews.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast('CSV downloaded successfully', 'File saved');
+}
+
 // --- Sorting Logic ---
 let sortDirection = 'asc';
 let lastSortedColumn = -1;
@@ -310,7 +363,6 @@ function resetBtn() {
     const btnText = document.getElementById('btnText');
     const btnLoader = document.getElementById('btnLoader');
     const fetchBtn = document.getElementById('fetchBtn');
-
     fetchBtn.disabled = false;
     fetchBtn.classList.remove('opacity-75', 'cursor-not-allowed');
     btnText.textContent = "Analyze";
@@ -324,8 +376,12 @@ function showError(msg) {
     errorContainer.classList.remove('hidden');
 }
 
-function showToast() {
+function showToast(title = 'Success', msg = '') {
     const toast = document.getElementById('toast');
+    const titleEl = document.getElementById('toastTitle') || toast.querySelector('.font-bold');
+    const msgEl = document.getElementById('toastMessage') || toast.querySelector('.opacity-90');
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = msg;
     toast.classList.remove('translate-y-24', 'opacity-0');
     setTimeout(() => {
         toast.classList.add('translate-y-24', 'opacity-0');
@@ -341,9 +397,78 @@ function copyTable() {
     selection.addRange(range);
     try {
         document.execCommand('copy');
-        showToast();
+        showToast('Success', 'Table copied to clipboard');
     } catch (err) {
         console.error('Copy failed', err);
     }
     selection.removeAllRanges();
 }
+
+// --- Directional Hover Logic (Using Closest Edge) ---
+function initDirectionalButtons() {
+    const buttons = document.querySelectorAll('.btn-directional');
+
+    buttons.forEach(btn => {
+        // Check if initialized
+        if (btn.classList.contains('js-hover-init')) return;
+        btn.classList.add('js-hover-init');
+
+        // Helper to set CSS vars based on mouse position
+        const updateVars = (e, isLeave = false) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const w = rect.width;
+            const h = rect.height;
+
+            // Distance to edges
+            const distTop = y;
+            const distBottom = h - y;
+            const distLeft = x;
+            const distRight = w - x;
+
+            // Find min dist
+            const min = Math.min(distTop, distBottom, distLeft, distRight);
+            let direction; // 0:Top, 1:Right, 2:Bottom, 3:Left
+
+            if (min === distTop) direction = 0;
+            else if (min === distBottom) direction = 2;
+            else if (min === distLeft) direction = 3;
+            else direction = 1;
+
+            // Determine Origin and Start Scale based on direction
+            let origin, transformFrom;
+
+            switch (direction) {
+                case 0: // Top
+                    origin = 'top center';
+                    transformFrom = 'scale(1, 0)'; // Stretch vertically
+                    break;
+                case 1: // Right
+                    origin = 'right center';
+                    transformFrom = 'scale(0, 1)'; // Stretch horizontally
+                    break;
+                case 2: // Bottom
+                    origin = 'bottom center';
+                    transformFrom = 'scale(1, 0)'; // Stretch vertically
+                    break;
+                case 3: // Left
+                    origin = 'left center';
+                    transformFrom = 'scale(0, 1)'; // Stretch horizontally
+                    break;
+            }
+
+            btn.style.setProperty('--origin', origin);
+            btn.style.setProperty('--transform-from', transformFrom);
+        };
+
+        btn.addEventListener('mouseenter', (e) => updateVars(e, false));
+        btn.addEventListener('mouseleave', (e) => updateVars(e, true));
+    });
+}
+
+// Init everything
+document.addEventListener('DOMContentLoaded', () => {
+    initCustomSelect();
+    initDirectionalButtons();
+});

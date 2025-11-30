@@ -73,6 +73,65 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #475569;
 }
 
+/* --- Directional Hover Button Styles --- */
+.btn-directional {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    /* Creates stacking context */
+    transition: transform 0.1s ease;
+}
+
+.btn-directional:active {
+    transform: scale(0.98);
+}
+
+/* Pseudo-element acting as the "curtain" */
+.btn-directional::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* ScaleX/Y logic determined by JS variable */
+    transform: var(--transform-from, scale(0));
+    transform-origin: var(--origin, center);
+
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+    border-radius: inherit;
+}
+
+/* Hover state: Always full scale */
+.btn-directional:hover::before {
+    transform: scale(1, 1);
+}
+
+/* Colors for Main Analyze Button */
+#fetchBtn.btn-directional::before {
+    background: #0f172a;
+    /* Dark Slate (High Contrast) */
+}
+
+/* Colors for Secondary Buttons (White/Dark ones) */
+button.btn-directional:not(#fetchBtn)::before {
+    background: #3b82f6;
+    /* Bright Blue */
+}
+
+/* Text color transitions */
+button.btn-directional:not(#fetchBtn):hover span,
+button.btn-directional:not(#fetchBtn):hover svg {
+    color: white;
+    transition-delay: 0.05s;
+}
+
+button.btn-directional:not(#fetchBtn) span,
+button.btn-directional:not(#fetchBtn) svg {
+    transition: color 0.2s ease;
+}
+
 /* Animations */
 @keyframes spin {
     0% {
@@ -108,7 +167,7 @@ input[type=range]::-webkit-slider-runnable-track {
     }
 }
 
-/* Utility classes for animations to use in HTML */
+/* Utility classes for HTML */
 .animate-toast-in {
     animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
