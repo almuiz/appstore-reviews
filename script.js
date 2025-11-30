@@ -94,9 +94,6 @@ function selectCountry(opt) {
     document.getElementById('selectArrow').classList.remove('rotate-180');
 }
 
-// Initialize Logic
-initCustomSelect();
-
 // --- Extractor Logic ---
 
 function updateLimitDisplay(val) {
@@ -185,9 +182,6 @@ async function fetchReviews() {
         allFetchedReviews = Array.isArray(data.feed.entry) ? data.feed.entry : [data.feed.entry];
 
         renderTable();
-
-        // Re-initialize hover effects for new buttons in DOM
-        setTimeout(initDirectionalButtons, 100);
 
     } catch (err) {
         console.error(err);
@@ -404,22 +398,22 @@ function copyTable() {
     selection.removeAllRanges();
 }
 
-// --- Directional Hover Logic (Using Closest Edge) ---
+// --- Directional Hover Logic (Fixed: No Cloning) ---
 function initDirectionalButtons() {
     const buttons = document.querySelectorAll('.btn-directional');
 
     buttons.forEach(btn => {
-        // Check if initialized
-        if (btn.classList.contains('js-hover-init')) return;
-        btn.classList.add('js-hover-init');
+        // Prevent re-initialization
+        if (btn.dataset.hoverInit === "true") return;
+        btn.dataset.hoverInit = "true";
 
         // Helper to set CSS vars based on mouse position
         const updateVars = (e, isLeave = false) => {
             const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
             const w = rect.width;
             const h = rect.height;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
             // Distance to edges
             const distTop = y;
@@ -442,19 +436,19 @@ function initDirectionalButtons() {
             switch (direction) {
                 case 0: // Top
                     origin = 'top center';
-                    transformFrom = 'scale(1, 0)'; // Stretch vertically
+                    transformFrom = 'scale(1, 0)';
                     break;
                 case 1: // Right
                     origin = 'right center';
-                    transformFrom = 'scale(0, 1)'; // Stretch horizontally
+                    transformFrom = 'scale(0, 1)';
                     break;
                 case 2: // Bottom
                     origin = 'bottom center';
-                    transformFrom = 'scale(1, 0)'; // Stretch vertically
+                    transformFrom = 'scale(1, 0)';
                     break;
                 case 3: // Left
                     origin = 'left center';
-                    transformFrom = 'scale(0, 1)'; // Stretch horizontally
+                    transformFrom = 'scale(0, 1)';
                     break;
             }
 
@@ -467,8 +461,35 @@ function initDirectionalButtons() {
     });
 }
 
-// Init everything
+// --- Init Event Listeners (Clean Separation) ---
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Init Logic
     initCustomSelect();
     initDirectionalButtons();
+
+    // 2. Attach Click Listeners by ID (Safer than inline onclick)
+    const fetchBtn = document.getElementById('fetchBtn');
+    if (fetchBtn) fetchBtn.addEventListener('click', fetchReviews);
+
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) exportBtn.addEventListener('click', downloadCSV);
+
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) copyBtn.addEventListener('click', copyTable);
+
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+    const limitRange = document.getElementById('limitRange');
+    if (limitRange) limitRange.addEventListener('input', (e) => updateLimitDisplay(e.target.value));
+
+    // Sort Headers
+    const headers = document.querySelectorAll('th[data-sort]');
+    headers.forEach((th, index) => {
+        th.addEventListener('click', () => sortTable(index, th.dataset.sort));
+    });
+
+    // Trigger custom select toggle
+    const customSelectTrigger = document.getElementById('customSelectTrigger');
+    if (customSelectTrigger) customSelectTrigger.addEventListener('click', toggleCustomSelect);
 });
